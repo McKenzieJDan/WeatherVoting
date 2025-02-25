@@ -1,0 +1,23 @@
+name: WeatherVoting
+version: 1.0.0
+main: io.mckenz.weathervoting.WeatherVoting
+api-version: 1.21
+description: Allows players to vote on changing the current weather
+author: mckenz.io
+commands:
+  voteweather:
+    description: Vote to change the weather
+    usage: /voteweather [sunny|rain|thunder]
+    aliases: [weathervote, votew]
+    permission: weathervoting.vote
+  forecast:
+    description: View the current weather forecast
+    usage: /forecast
+    permission: weathervoting.forecast
+permissions:
+  weathervoting.vote:
+    description: Allows players to vote for weather changes
+    default: true
+  weathervoting.forecast:
+    description: Allows players to view the weather forecast
+    default: true 

@@ -1,0 +1,48 @@
+# WeatherVoting Configuration
+
+voting:
+  # Percentage of online players needed to change the weather (1-100)
+  threshold-percentage: 50
+
+# Cooldown settings
+cooldowns:
+  # Time in seconds between allowed weather changes
+  between-changes: 300
+  # Time in seconds between allowed votes from the same player
+  between-votes: 60
+
+# Weather duration control
+weather-duration:
+  sunny: 6000  # Duration in ticks (20 ticks = 1 second)
+  rain: 3000
+  thunder: 2000
+
+# Vote announcements
+announcements:
+  broadcast-votes: true
+
+# Weather forecast
+forecast:
+  enabled: true
+
+messages:
+  # Messages sent to players
+  prefix: "&6[WeatherVoting] &r"
+  vote-cast: "&aYou have voted for {weather} weather!"
+  vote-status-header: "&6=== Weather Vote Status ==="
+  vote-status-format: "&e{weather}: &f{votes}/{required}"
+  vote-status-footer: "&6To vote: &f/voteweather <sunny|rain|thunder>"
+  weather-changed: "&aThe weather has been changed to {weather} due to voting!"
+  no-permission: "&cYou don't have permission to vote for weather!"
+  players-only: "&cOnly players can vote for weather!"
+  invalid-weather: "&cInvalid weather type! Use: sunny, rain, or thunder"
+  cooldown-vote: "&cYou must wait {time} seconds before voting again!"
+  cooldown-change: "&cWeather was recently changed. Wait {time} seconds before another change."
+  vote-broadcast: "&e{player} &7has voted for &e{weather} &7weather! &7(&e{votes}/{required}&7)"
+  forecast: "&eThe weather forecast for &6{world}&e: Currently &6{current}&e, changing naturally in &6{time}&e."
+  
+  # Weather type display names (used in messages)
+  weather-types:
+    sunny: "sunny"
+    rain: "rainy"
+    thunder: "thunderstorm"
