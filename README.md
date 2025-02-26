@@ -2,7 +2,7 @@
 
 A Minecraft is a Spigot plugin that allows players to vote on changing the current weather in the Minecraft server. When enough players vote for a specific weather type, the weather will change accordingly.
 
-[![SpigotMC](https://img.shields.io/badge/SpigotMC-FirstSpawn-orange)](/)
+[![SpigotMC](https://www.spigotmc.org/resources/weathervoting.122848/)](/)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/paypalme/mckenzio)
 
 ## Features
