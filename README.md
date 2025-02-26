@@ -17,7 +17,7 @@ A Minecraft is a Spigot plugin that allows players to vote on changing the curre
 
 ## Installation
 
-1. Download from [Spigot]() or [GitHub Releases](https://github.com/McKenzieJDan/WeatherVoting/releases)
+1. Download from [Spigot](https://www.spigotmc.org/resources/weathervoting.122848/) or [GitHub Releases](https://github.com/McKenzieJDan/WeatherVoting/releases)
 2. Place the .jar in your server's `plugins` folder
 3. Restart your server
 
