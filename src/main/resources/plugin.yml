@@ -1,5 +1,5 @@
 name: WeatherVoting
-version: 1.0.0
+version: '${project.version}'
 main: io.mckenz.weathervoting.WeatherVoting
 api-version: 1.21
 description: Allows players to vote on changing the current weather

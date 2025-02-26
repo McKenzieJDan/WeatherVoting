@@ -1,33 +1,64 @@
+# ======================================
 # WeatherVoting Configuration
+# ======================================
+# Plugin Version: ${project.version}
+# 
+# This configuration file controls all aspects of the WeatherVoting plugin.
+# For support or questions, visit: https://github.com/McKenzieJDan/WeatherVoting
+
+# ======================================
+# Voting Settings
+# ======================================
 
 voting:
   # Percentage of online players needed to change the weather (1-100)
   threshold-percentage: 50
 
-# Cooldown settings
+# ======================================
+# Cooldown Settings
+# ======================================
+
 cooldowns:
   # Time in seconds between allowed weather changes
   between-changes: 300
   # Time in seconds between allowed votes from the same player
   between-votes: 60
 
-# Weather duration control
+# ======================================
+# Weather Duration Control
+# ======================================
+
 weather-duration:
-  sunny: 6000  # Duration in ticks (20 ticks = 1 second)
+  # Duration in ticks (20 ticks = 1 second)
+  sunny: 6000
   rain: 3000
   thunder: 2000
 
-# Vote announcements
+# ======================================
+# Announcement Settings
+# ======================================
+
 announcements:
+  # Whether to broadcast votes to all players
   broadcast-votes: true
 
-# Weather forecast
+# ======================================
+# Weather Forecast Settings
+# ======================================
+
 forecast:
+  # Enable or disable the weather forecast feature
   enabled: true
 
+# ======================================
+# Message Settings
+# ======================================
+
 messages:
-  # Messages sent to players
+  # Prefix for all plugin messages
   prefix: "&6[WeatherVoting] &r"
+  
+  # Player feedback messages
   vote-cast: "&aYou have voted for {weather} weather!"
   vote-status-header: "&6=== Weather Vote Status ==="
   vote-status-format: "&e{weather}: &f{votes}/{required}"
