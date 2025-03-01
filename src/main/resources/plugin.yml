@@ -20,4 +20,7 @@ permissions:
     default: true
   weathervoting.forecast:
     description: Allows players to view the weather forecast
-    default: true 
+    default: true
+  weathervoting.update:
+    description: Allows players to receive update notifications
+    default: op 

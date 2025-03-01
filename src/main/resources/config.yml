@@ -51,6 +51,21 @@ forecast:
   enabled: true
 
 # ======================================
+# Update Checker Settings
+# ======================================
+
+update-checker:
+  # Enable or disable the update checker
+  enabled: true
+
+  # The SpigotMC resource ID for the plugin
+  # https://www.spigotmc.org/resources/weathervoting.122848/
+  resource-id: 122848
+  # Whether to notify admins when they join if an update is available
+  
+  notify-admins: true
+
+# ======================================
 # Message Settings
 # ======================================
 
