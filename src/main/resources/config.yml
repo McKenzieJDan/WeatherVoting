@@ -56,24 +56,24 @@ forecast:
 
 messages:
   # Prefix for all plugin messages
-  prefix: "&6[WeatherVoting] &r"
+  prefix: "&8[&6⛅&8] &r"
   
   # Player feedback messages
-  vote-cast: "&aYou have voted for {weather} weather!"
-  vote-status-header: "&6=== Weather Vote Status ==="
-  vote-status-format: "&e{weather}: &f{votes}/{required}"
-  vote-status-footer: "&6To vote: &f/voteweather <sunny|rain|thunder>"
-  weather-changed: "&aThe weather has been changed to {weather} due to voting!"
-  no-permission: "&cYou don't have permission to vote for weather!"
-  players-only: "&cOnly players can vote for weather!"
-  invalid-weather: "&cInvalid weather type! Use: sunny, rain, or thunder"
-  cooldown-vote: "&cYou must wait {time} seconds before voting again!"
-  cooldown-change: "&cWeather was recently changed. Wait {time} seconds before another change."
-  vote-broadcast: "&e{player} &7has voted for &e{weather} &7weather! &7(&e{votes}/{required}&7)"
-  forecast: "&eThe weather forecast for &6{world}&e: Currently &6{current}&e, changing naturally in &6{time}&e."
+  vote-cast: "&a✔ &7You voted for &e{weather} &7weather"
+  vote-status-header: "&8⎯⎯⎯⎯⎯⎯⎯ &6Weather Vote Status &8⎯⎯⎯⎯⎯⎯⎯"
+  vote-status-format: "  &e{weather} &8» &f{votes}&7/&f{required}"
+  vote-status-footer: "&8⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n&7Type &f/voteweather &e<sunny|rain|thunder> &7to vote"
+  weather-changed: "&a✔ &7Weather changed to &e{weather} &7by vote"
+  no-permission: "&c✘ &7You don't have permission to do this"
+  players-only: "&c✘ &7This command is for players only"
+  invalid-weather: "&c✘ &7Invalid weather type. Use: &fsunny&7, &frain&7, or &fthunder"
+  cooldown-vote: "&c✘ &7Please wait &f{time}s &7before voting again"
+  cooldown-change: "&c✘ &7Weather was changed recently. Wait &f{time}s"
+  vote-broadcast: "&7[&e☀&7] &f{player} &7voted for &e{weather} &8(&f{votes}&7/&f{required}&8)"
+  forecast: "&7Current weather in &f{world}&7: &e{current}\n&7Natural change in: &f{time}"
   
   # Weather type display names (used in messages)
   weather-types:
-    sunny: "sunny"
-    rain: "rainy"
-    thunder: "thunderstorm"
+    sunny: "☀ Sunny"
+    rain: "🌧 Rain"
+    thunder: "⚡ Storm"

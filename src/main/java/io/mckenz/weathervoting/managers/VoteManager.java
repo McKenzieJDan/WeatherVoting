@@ -26,11 +26,32 @@ public class VoteManager {
     }
     
     public boolean vote(Player player, String weatherType, String worldName) {
+        // Validate weather type first
+        String voteType;
+        switch (weatherType.toLowerCase()) {
+            case "sunny":
+            case "clear":
+                voteType = "sunny";
+                break;
+            case "rain":
+            case "rainy":
+                voteType = "rain";
+                break;
+            case "thunder":
+            case "storm":
+                voteType = "thunder";
+                break;
+            default:
+                String message = getMessage("invalid-weather", "&c✘ &7Invalid weather type. Use: &fsunny&7, &frain&7, or &fthunder");
+                player.sendMessage(colorize(getPrefix() + message));
+                return false;
+        }
+
         // Check player cooldown
         CooldownManager cooldownManager = plugin.getCooldownManager();
         if (cooldownManager.isPlayerOnCooldown(player)) {
             int remainingTime = cooldownManager.getRemainingCooldown(player);
-            String message = getMessage("cooldown-vote", "&cYou must wait {time} seconds before voting again!")
+            String message = getMessage("cooldown-vote", "&c✘ &7Please wait &f{time}s &7before voting again!")
                     .replace("{time}", String.valueOf(remainingTime));
             player.sendMessage(colorize(getPrefix() + message));
             return false;
@@ -39,7 +60,7 @@ public class VoteManager {
         // Check world cooldown
         if (cooldownManager.isWorldOnCooldown(worldName)) {
             int remainingTime = cooldownManager.getWorldRemainingCooldown(worldName);
-            String message = getMessage("cooldown-change", "&cWeather was recently changed. Wait {time} seconds before another change.")
+            String message = getMessage("cooldown-change", "&c✘ &7Weather was changed recently. Wait &f{time}s")
                     .replace("{time}", String.valueOf(remainingTime));
             player.sendMessage(colorize(getPrefix() + message));
             return false;
@@ -63,27 +84,17 @@ public class VoteManager {
         rainVotes.get(worldKey).remove(playerUUID);
         thunderVotes.get(worldKey).remove(playerUUID);
         
-        String voteType;
-        
         // Add new vote
-        switch (weatherType.toLowerCase()) {
+        switch (voteType) {
             case "sunny":
-            case "clear":
                 sunnyVotes.get(worldKey).add(playerUUID);
-                voteType = "sunny";
                 break;
             case "rain":
-            case "rainy":
                 rainVotes.get(worldKey).add(playerUUID);
-                voteType = "rain";
                 break;
             case "thunder":
-            case "storm":
                 thunderVotes.get(worldKey).add(playerUUID);
-                voteType = "thunder";
                 break;
-            default:
-                return false;
         }
         
         // Set player cooldown
@@ -116,7 +127,7 @@ public class VoteManager {
                 break;
         }
         
-        int requiredVotes = calculateRequiredVotes(Bukkit.getOnlinePlayers().size());
+        int requiredVotes = calculateRequiredVotes(0);
         
         String message = getMessage("vote-broadcast", "&e{player} &7has voted for &e{weather} &7weather! &7(&e{votes}/{required}&7)")
                 .replace("{player}", player.getName())
@@ -129,8 +140,7 @@ public class VoteManager {
     
     private void checkVotes(World world) {
         String worldKey = world.getName();
-        int onlinePlayers = Bukkit.getOnlinePlayers().size();
-        int requiredVotes = calculateRequiredVotes(onlinePlayers);
+        int requiredVotes = calculateRequiredVotes(0);
         
         if (sunnyVotes.getOrDefault(worldKey, new HashSet<>()).size() >= requiredVotes) {
             // Set weather to sunny
@@ -186,8 +196,16 @@ public class VoteManager {
     }
     
     private int calculateRequiredVotes(int onlinePlayers) {
+        // Get all players, including those from GeyserMC/Floodgate
+        int totalPlayers = 0;
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player != null && player.isOnline()) {
+                totalPlayers++;
+            }
+        }
+        
         double percentage = plugin.getConfig().getDouble("voting.threshold-percentage", 50.0);
-        return Math.max(1, (int) Math.ceil(onlinePlayers * (percentage / 100.0)));
+        return Math.max(1, (int) Math.ceil(totalPlayers * (percentage / 100.0)));
     }
     
     private void resetVotes(String worldKey) {
@@ -209,8 +227,7 @@ public class VoteManager {
     }
     
     public int getRequiredVotes() {
-        int onlinePlayers = Bukkit.getOnlinePlayers().size();
-        return calculateRequiredVotes(onlinePlayers);
+        return calculateRequiredVotes(0);
     }
     
     public String getPrefix() {
