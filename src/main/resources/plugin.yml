@@ -2,25 +2,59 @@ name: WeatherVoting
 version: '${project.version}'
 main: io.mckenz.weathervoting.WeatherVoting
 api-version: 1.21
-description: Allows players to vote on changing the current weather
+description: A Minecraft Spigot plugin that allows players to vote on changing the current weather in the server.
 author: mckenz.io
+
 commands:
   voteweather:
-    description: Vote to change the weather
-    usage: /voteweather [sunny|rain|thunder]
-    aliases: [weathervote, votew]
-    permission: weathervoting.vote
+    description: Vote for a weather type
+    usage: |
+      /<command> - Shows the current vote status
+      /<command> sunny - Vote for sunny weather
+      /<command> rain - Vote for rainy weather
+      /<command> thunder - Vote for thunderstorm
+    aliases: [votew, vw]
+  weathervoting:
+    description: Admin commands for WeatherVoting plugin
+    usage: |
+      /<command> status - Shows plugin status
+      /<command> toggle - Enable/disable the plugin
+      /<command> reload - Reload the configuration
+      /<command> debug - Toggle debug mode
+    aliases: [wv]
   forecast:
-    description: View the current weather forecast
-    usage: /forecast
-    permission: weathervoting.forecast
+    description: View the current weather and when it will change naturally
+    usage: /<command> - View the current weather and when it will change naturally
+    aliases: [wf]
+
 permissions:
+  weathervoting.admin:
+    description: Gives access to all WeatherVoting admin commands
+    default: op
+    children:
+      weathervoting.status: true
+      weathervoting.toggle: true
+      weathervoting.reload: true
+      weathervoting.debug: true
+      weathervoting.update: true
   weathervoting.vote:
-    description: Allows players to vote for weather changes
+    description: Allows voting for weather changes
     default: true
   weathervoting.forecast:
-    description: Allows players to view the weather forecast
+    description: Allows checking the weather forecast
     default: true
+  weathervoting.status:
+    description: Allows checking the plugin status
+    default: op
+  weathervoting.toggle:
+    description: Allows enabling/disabling the plugin
+    default: op
+  weathervoting.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+  weathervoting.debug:
+    description: Allows toggling debug mode
+    default: op
   weathervoting.update:
-    description: Allows players to receive update notifications
+    description: Allows receiving update notifications
     default: op 

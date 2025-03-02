@@ -2,6 +2,7 @@ package io.mckenz.weathervoting;
 
 import io.mckenz.weathervoting.commands.ForecastCommand;
 import io.mckenz.weathervoting.commands.VoteWeatherCommand;
+import io.mckenz.weathervoting.commands.WeatherVotingCommand;
 import io.mckenz.weathervoting.managers.CooldownManager;
 import io.mckenz.weathervoting.managers.VoteManager;
 import io.mckenz.weathervoting.utils.UpdateChecker;
@@ -17,6 +18,8 @@ public class WeatherVoting extends JavaPlugin {
     private CooldownManager cooldownManager;
     private Map<String, Long> lastWeatherChange;
     private UpdateChecker updateChecker;
+    private boolean pluginEnabled = true;
+    private boolean debugMode = false;
     
     @Override
     public void onEnable() {
@@ -30,6 +33,7 @@ public class WeatherVoting extends JavaPlugin {
         
         // Register commands
         getCommand("voteweather").setExecutor(new VoteWeatherCommand(this));
+        getCommand("weathervoting").setExecutor(new WeatherVotingCommand(this));
         
         // Register forecast command if enabled
         if (getConfig().getBoolean("forecast.enabled", true)) {
@@ -70,5 +74,47 @@ public class WeatherVoting extends JavaPlugin {
     
     public UpdateChecker getUpdateChecker() {
         return updateChecker;
+    }
+    
+    /**
+     * Check if the plugin is currently enabled
+     * @return true if the plugin is enabled
+     */
+    public boolean isPluginEnabled() {
+        return pluginEnabled;
+    }
+    
+    /**
+     * Set the plugin's enabled state
+     * @param enabled true to enable the plugin, false to disable
+     */
+    public void setPluginEnabled(boolean enabled) {
+        this.pluginEnabled = enabled;
+    }
+    
+    /**
+     * Check if debug mode is enabled
+     * @return true if debug mode is enabled
+     */
+    public boolean isDebugMode() {
+        return debugMode;
+    }
+    
+    /**
+     * Set the debug mode state
+     * @param enabled true to enable debug mode, false to disable
+     */
+    public void setDebugMode(boolean enabled) {
+        this.debugMode = enabled;
+    }
+    
+    /**
+     * Log a debug message if debug mode is enabled
+     * @param message The message to log
+     */
+    public void debug(String message) {
+        if (debugMode) {
+            getLogger().info("[DEBUG] " + message);
+        }
     }
 } 

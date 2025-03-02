@@ -26,6 +26,13 @@ public class VoteManager {
     }
     
     public boolean vote(Player player, String weatherType, String worldName) {
+        // Check if plugin is enabled
+        if (!plugin.isPluginEnabled()) {
+            String message = getMessage("plugin-disabled", "&7The WeatherVoting plugin is currently disabled.");
+            player.sendMessage(colorize(getPrefix() + message));
+            return false;
+        }
+        
         // Validate weather type first
         String voteType;
         switch (weatherType.toLowerCase()) {
@@ -42,7 +49,7 @@ public class VoteManager {
                 voteType = "thunder";
                 break;
             default:
-                String message = getMessage("invalid-weather", "&c✘ &7Invalid weather type. Use: &fsunny&7, &frain&7, or &fthunder");
+                String message = getMessage("invalid-weather", "&7Invalid weather type. Use sunny, rain, or thunder.");
                 player.sendMessage(colorize(getPrefix() + message));
                 return false;
         }
@@ -51,8 +58,8 @@ public class VoteManager {
         CooldownManager cooldownManager = plugin.getCooldownManager();
         if (cooldownManager.isPlayerOnCooldown(player)) {
             int remainingTime = cooldownManager.getRemainingCooldown(player);
-            String message = getMessage("cooldown-vote", "&c✘ &7Please wait &f{time}s &7before voting again!")
-                    .replace("{time}", String.valueOf(remainingTime));
+            String message = getMessage("vote-cooldown", "&7You must wait &f%seconds% &7seconds before voting again.")
+                    .replace("%seconds%", String.valueOf(remainingTime));
             player.sendMessage(colorize(getPrefix() + message));
             return false;
         }
@@ -60,8 +67,8 @@ public class VoteManager {
         // Check world cooldown
         if (cooldownManager.isWorldOnCooldown(worldName)) {
             int remainingTime = cooldownManager.getWorldRemainingCooldown(worldName);
-            String message = getMessage("cooldown-change", "&c✘ &7Weather was changed recently. Wait &f{time}s")
-                    .replace("{time}", String.valueOf(remainingTime));
+            String message = getMessage("change-cooldown", "&7Weather was recently changed. Please wait &f%seconds% &7seconds.")
+                    .replace("%seconds%", String.valueOf(remainingTime));
             player.sendMessage(colorize(getPrefix() + message));
             return false;
         }
@@ -129,11 +136,11 @@ public class VoteManager {
         
         int requiredVotes = calculateRequiredVotes(0);
         
-        String message = getMessage("vote-broadcast", "&e{player} &7has voted for &e{weather} &7weather! &7(&e{votes}/{required}&7)")
-                .replace("{player}", player.getName())
-                .replace("{weather}", weatherName)
-                .replace("{votes}", String.valueOf(votes))
-                .replace("{required}", String.valueOf(requiredVotes));
+        String message = getMessage("vote-announcement", "&e%player% &7voted for &e%weather%&7. (&f%votes%&7/&f%required%&7)")
+                .replace("%player%", player.getName())
+                .replace("%weather%", weatherName)
+                .replace("%votes%", String.valueOf(votes))
+                .replace("%required%", String.valueOf(requiredVotes));
         
         Bukkit.broadcastMessage(colorize(getPrefix() + message));
     }
@@ -190,8 +197,8 @@ public class VoteManager {
     
     private void broadcastWeatherChange(String weatherType) {
         String weatherName = getWeatherName(weatherType);
-        String message = getMessage("weather-changed", "&aThe weather has been changed to {weather} due to voting!")
-                .replace("{weather}", weatherName);
+        String message = getMessage("weather-changed", "&7The weather has been changed to &e%weather%&7!")
+                .replace("%weather%", weatherName);
         Bukkit.broadcastMessage(colorize(getPrefix() + message));
     }
     
@@ -240,6 +247,43 @@ public class VoteManager {
     
     public String getWeatherName(String weatherType) {
         return plugin.getConfig().getString("messages.weather-types." + weatherType, weatherType);
+    }
+    
+    /**
+     * Checks if a player has voted for a specific weather type
+     * @param playerUUID The player's UUID
+     * @param weatherType The weather type to check
+     * @param worldName The world name
+     * @return true if the player has voted for this weather type
+     */
+    public boolean hasVotedFor(UUID playerUUID, String weatherType, String worldName) {
+        switch (weatherType.toLowerCase()) {
+            case "sunny":
+                return sunnyVotes.getOrDefault(worldName, new HashSet<>()).contains(playerUUID);
+            case "rain":
+                return rainVotes.getOrDefault(worldName, new HashSet<>()).contains(playerUUID);
+            case "thunder":
+                return thunderVotes.getOrDefault(worldName, new HashSet<>()).contains(playerUUID);
+            default:
+                return false;
+        }
+    }
+    
+    /**
+     * Gets the weather type a player has voted for
+     * @param playerUUID The player's UUID
+     * @param worldName The world name
+     * @return The weather type the player voted for, or null if they haven't voted
+     */
+    public String getPlayerVote(UUID playerUUID, String worldName) {
+        if (sunnyVotes.getOrDefault(worldName, new HashSet<>()).contains(playerUUID)) {
+            return "sunny";
+        } else if (rainVotes.getOrDefault(worldName, new HashSet<>()).contains(playerUUID)) {
+            return "rain";
+        } else if (thunderVotes.getOrDefault(worldName, new HashSet<>()).contains(playerUUID)) {
+            return "thunder";
+        }
+        return null;
     }
     
     public static String colorize(String message) {
