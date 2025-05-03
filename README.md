@@ -58,8 +58,8 @@ For detailed configuration options, see the comments in the generated config.yml
 
 ## Requirements
 
-- Spigot/Paper 1.21.4
-- Java 17+
+- Java 21+
+- Spigot/Paper 1.21.5
 
 ## Support
 
