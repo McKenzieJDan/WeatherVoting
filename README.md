@@ -61,6 +61,11 @@ For detailed configuration options, see the comments in the generated config.yml
 - Java 21+
 - Spigot/Paper 1.21.5
 
+## Used By
+
+[SuegoFaults](https://suegofaults.com) - A mature Minecraft community where WeatherVoting gives players shared control over the skies.
+
+
 ## Support
 
 If you find this plugin helpful, consider [buying me a coffee](https://www.paypal.com/paypalme/mckenzio) ☕
